@@ -8,6 +8,8 @@ const authRoutes = require('./routes/auth');
 const loginRoutes = require('./routes/login');
 const passwordRoutes = require('./routes/password');
 const carritoRoutes = require('./routes/carrito');
+const productosRoutes = require('./routes/productos');
+const pedidosRoutes = require('./routes/pedidos');
 
 // Middleware para pasear json
 app.use(cors());
@@ -17,6 +19,8 @@ app.use('/api', authRoutes);
 app.use('/api', loginRoutes);
 app.use('/api', passwordRoutes);
 app.use('/api', carritoRoutes);
+app.use('/api', productosRoutes);
+app.use('/api', pedidosRoutes);
 
 // Inicializar el puerto
 const PORT = process.env.PORT || 3000;
