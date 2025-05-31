@@ -1,7 +1,34 @@
 const express = require('express');
 const cors = require('cors');
-const app = express();
 require('dotenv').config();
+
+const app = express();
+
+// Habilitar CORS para el frontend
+app.use(cors({ origin: 'http://127.0.0.1:5500' }));
+
+//Inicializa el puerto
+const PORT = process.env.PORT || 3000;
+
+// Middleware para parsear json
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//Ruta principal
+app.get('/', (req, res) => {
+    res.json({
+        mensaje: 'Servidor corriendo',
+        timestamp: new Date().toISOString()
+    });
+});
+
+//Ruta de api
+app.get('/api', (req, res) => {
+    res.json({
+        mensaje: 'API funcionando',
+        enpoints: ['POST api/login', 'POST api/registro', 'POST api/login/google']
+    });
+});
 
 // Cargar las rutas
 const authRoutes = require('./routes/auth');
@@ -12,10 +39,6 @@ const productosRoutes = require('./routes/productos');
 const pedidosRoutes = require('./routes/pedidos');
 const comentarioRoutes = require('./routes/comentario');
 
-// Middleware para pasear json
-app.use(cors());
-app.use(express.json());
-
 app.use('/api', authRoutes);
 app.use('/api', loginRoutes);
 app.use('/api', passwordRoutes);
@@ -24,9 +47,8 @@ app.use('/api', productosRoutes);
 app.use('/api', pedidosRoutes);
 app.use('/api', comentarioRoutes);
 
-// Inicializar el puerto
-const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Servidor escuchando ${PORT}`);
+    console.log(`Api disponible en ${PORT}/api`);
 });
