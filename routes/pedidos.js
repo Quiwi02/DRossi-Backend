@@ -29,7 +29,7 @@ router.post('/pedidos', (req, res) => {
 
             // 2. Insertar en pedidos
             db.query(
-                `INSERT INTO pedidos (total_pago, metodo_pago, id_usuario, fecha_pedido, estado,) VALUES (?, ?, NOW(), ?, 'Pendiente')`,
+                `INSERT INTO pedidos (total_pago, metodo_pago, id_usuario, fecha_pedido, estado) VALUES (?, ?, ?, NOW(), 'Pendiente')`,
                 [total, metodo_pago, id_usuario],
                 (err, result) => {
                     if (err) return res.status(500).json({ error: err });
