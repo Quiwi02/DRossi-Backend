@@ -7,6 +7,10 @@ const db = require('../config/db');
 router.post('/pedidos', (req, res) => {
     const { id_usuario, metodo_pago, productos } = req.body;
 
+    if (!id_usuario || !metodo_pago || !productos) {
+        return res.status(400).json({ mensaje: 'Faltan datos obligatorios'});
+    }
+
     // 1. Calcular total
     let total = 0;
     const productoIds = productos.map(p => p.id_productos);
@@ -39,7 +43,7 @@ router.post('/pedidos', (req, res) => {
                         [id_usuario],
                         (err) => {
                             if (err) return res.status(500).json({ error: err });
-                            res.json({ mensaje: 'Pedido creado con éxito', id_pedido });
+                            res.json({ mensaje: 'Pedido creado éxito', id_pedido });
                         });
                 });
         });
